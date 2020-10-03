@@ -1,0 +1,28 @@
+POST http://localhost:3000/producttype
+Content-Type: application/json
+
+    {
+        "name":"Carne"
+    }
+
+###
+
+GET http://localhost:3000/producttype
+
+###
+
+GET http://localhost:3000/producttype/2
+
+###
+
+PUT http://localhost:3000/producttype/2
+Content-Type: application/json
+
+    {
+        "name":"Organico"
+        
+    }
+
+###
+
+DELETE http://localhost:3000/producttype/2

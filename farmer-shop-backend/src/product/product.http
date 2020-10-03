@@ -1,0 +1,32 @@
+POST http://localhost:3000/product
+Content-Type: application/json
+
+    {
+        "name":"Alface",
+        "price": 45.30,
+        "producttypeid": 3
+    }
+
+###
+
+GET http://localhost:3000/product
+
+###
+
+GET http://localhost:3000/product/1
+
+###
+
+PUT http://localhost:3000/product/1
+Content-Type: application/json
+
+    {
+        "name":"Hamburgue",
+        "price": 1.99,
+        "producttypeid": 4
+    }
+
+
+###
+
+DELETE http://localhost:3000/product/1
