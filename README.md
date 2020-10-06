@@ -23,18 +23,33 @@ Depois disso, você pode instalar as dependências executando o seguinte comando
 ```
 yarn ou npm install
 ```
-
+###API
 No backend configure o arquivo .env com os dados do banco de dados.
 
 Obs: possui um arquivo de exemplo .env.exemple
 
-No frontend basta rodar o comando npm run serve na raiz do projeto e entrar no endereço:
+Para rodar a api basta executar o seguinte comando
 
+```
+npm run start ou nest start
+```
+obs: é necessario instalar o CLI do nest, devido a transpilação para TypeScript, [link](https://docs.nestjs.com/cli/overview).
+
+Apos iniciado, a api estará rodando no endereço:
+
+```
+http://localhost:3000
+```
+
+###FRONTEND
+No frontend basta rodar o comando na raiz do projeto:
+
+```
+npm run serve 
+```
+
+Apos iniciado, o frontend estará rodando no endereço:
 ```
 http://localhost:8080
 ```
 
-caso queira acessar a api basta:
-```
-http://localhost:3000
-```
