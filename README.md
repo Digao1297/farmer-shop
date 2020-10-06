@@ -23,7 +23,7 @@ Depois disso, você pode instalar as dependências executando o seguinte comando
 ```
 yarn ou npm install
 ```
-###API
+### API
 No backend configure o arquivo .env com os dados do banco de dados.
 
 Obs: possui um arquivo de exemplo .env.exemple
@@ -41,7 +41,7 @@ Apos iniciado, a api estará rodando no endereço:
 http://localhost:3000
 ```
 
-###FRONTEND
+### FRONTEND
 No frontend basta rodar o comando na raiz do projeto:
 
 ```
