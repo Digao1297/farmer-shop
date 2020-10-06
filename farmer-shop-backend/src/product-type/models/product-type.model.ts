@@ -16,11 +16,11 @@ export class ProductType {
   @Column({ type: 'varchar' })
   name: string;
 
-  @OneToMany(
-    type => Product,
-    product => product.producttype,
-  )
-  products: Product[];
+  // @OneToMany(
+  //   type => Product,
+  //   product => product.producttype,
+  // )
+  // products: Product[];
 
   @CreateDateColumn({ type: 'timestamp' })
   created_at: Date;

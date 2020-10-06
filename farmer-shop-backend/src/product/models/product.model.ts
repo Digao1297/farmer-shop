@@ -19,11 +19,11 @@ export class Product {
   @Column({ type: 'decimal' })
   price: number;
 
-  @ManyToOne(
-    type => ProductType,
-    producttype => producttype.products,
-  )
-  producttype: ProductType;
+  // @ManyToOne(
+  //   type => ProductType,
+  //   producttype => producttype.products,
+  // )
+  // producttype: ProductType;
 
   @CreateDateColumn({ type: 'timestamp' })
   created_at: Date;

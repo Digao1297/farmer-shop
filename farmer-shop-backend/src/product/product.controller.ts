@@ -34,11 +34,11 @@ export class ProductController {
 
   @Post()
   async store(@Body() body: ProductDto): Promise<Product> {
-    const producttype = await this.productTypeRepository.findOneOrFail(
-      +body.producttypeid,
-    );
+    // const producttype = await this.productTypeRepository.findOneOrFail(
+    //   +body.producttypeid,
+    // );
     const product = await this.productRepository.create(body);
-    product.producttype = producttype;
+    // product.producttype = producttype;
     return await this.productRepository.save(product);
   }
 
@@ -51,7 +51,7 @@ export class ProductController {
       +body.producttypeid,
     );
     const product = await this.productRepository.create(body);
-    product.producttype = producttype;
+    // product.producttype = producttype;
     await this.productRepository.update({ id: +id }, product);
     return await this.productRepository.findOneOrFail(id);
   }
