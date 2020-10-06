@@ -4,5 +4,6 @@ export default {
   path: "",
   name: "",
   component: () => import("../pages/index.vue"),
-  children: children
+  children: children,
+  redirect: "/dashboard",
 };
