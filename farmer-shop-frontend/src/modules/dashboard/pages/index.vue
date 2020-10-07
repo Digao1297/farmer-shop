@@ -3,8 +3,26 @@
     <v-app-bar app flat color="white">
       <v-spacer />
       <v-btn text>
-        Sair
+        {{ getLanguages.signout }}
       </v-btn>
+      <v-menu offset-y>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn icon v-bind="attrs" v-on="on">
+            <v-icon>mdi-earth</v-icon>
+          </v-btn>
+        </template>
+        <v-list>
+          <v-list-item @click.prevent="setLang('en')">
+            <v-list-item-title>English</v-list-item-title>
+          </v-list-item>
+          <v-list-item @click.prevent="setLang('pt-br')">
+            <v-list-item-title>Portuguese</v-list-item-title>
+          </v-list-item>
+          <v-list-item @click.prevent="setLang('es')">
+            <v-list-item-title>Spanish</v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu>
     </v-app-bar>
 
     <v-navigation-drawer :mini-variant.sync="mini" permanent app>
@@ -16,26 +34,35 @@
 
           <v-list-item-content>
             <v-list-item-title>Jane Smith</v-list-item-title>
-            <v-list-item-subtitle>Logged In</v-list-item-subtitle>
+            <v-list-item-subtitle>{{
+              getLanguages.logged_in
+            }}</v-list-item-subtitle>
           </v-list-item-content>
         </v-list-item>
       </template>
 
       <v-divider></v-divider>
 
-      <v-list dense v-model="item">
-        <v-list-item
-          v-for="(_item, index) in items"
-          :key="_item.title"
-          link
-          @click.prevent="setItem(index)"
-        >
+      <v-list dense>
+        <v-list-item link @click.prevent="setItem(1)">
           <v-list-item-icon>
-            <v-icon>{{ _item.icon }}</v-icon>
+            <v-icon>mdi-home</v-icon>
           </v-list-item-icon>
 
           <v-list-item-content>
-            <v-list-item-title>{{ _item.title }}</v-list-item-title>
+            <v-list-item-title>{{ getLanguages.home }}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-list-item link @click.prevent="setItem(2)">
+          <v-list-item-icon>
+            <v-icon>mdi-bookmark-multiple</v-icon>
+          </v-list-item-icon>
+
+          <v-list-item-content>
+            <v-list-item-title>{{
+              getLanguages.type_product
+            }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -49,29 +76,38 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
 export default {
   name: "dashboard",
   data: () => ({
-    item: 1,
-    items: [
-      { title: "Inicio", icon: "mdi-home" },
-      { title: "Tipo produto", icon: "mdi-bookmark-multiple" }
-    ]
+    item: 1
   }),
   components: {
     "type-product": () => import("./typeProduct")
   },
   methods: {
+    ...mapActions({
+      actionSetLanguage: "language/actionSetLanguage"
+    }),
     setItem(value) {
       this.item = value;
+    },
+    setLang(lang) {
+      this.actionSetLanguage(lang);
+      this.$vuetify.lang.current = lang;
     }
   },
   computed: {
+    ...mapGetters({
+      getLanguages: "language/getLanguages"
+    }),
     mini() {
       return this.$vuetify.breakpoint.mdAndDown;
     }
   },
-  created() {}
+  created() {
+    console.log();
+  }
 };
 </script>
 
