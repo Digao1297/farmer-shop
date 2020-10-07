@@ -24,11 +24,11 @@ PUT http://localhost:3000/address/1
 Content-Type: application/json
 
     {
-        "user_id": 3,
+       "user_id": 3,
         "district": "Orange park",
         "street": "Orange",
         "number": 45,
-        "complement": "Orange"
+        "complement": "Orange" 
     }
 
 
