@@ -10,7 +10,7 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ProductTypeDto } from './dto/product-type.dto';
-import { ProductType } from './models/product-type.model';
+import { ProductType } from './product-type.entity';
 
 @Controller('producttype')
 export class ProductTypeController {

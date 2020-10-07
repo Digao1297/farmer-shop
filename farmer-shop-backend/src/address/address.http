@@ -1,0 +1,37 @@
+POST http://localhost:3000/address
+Content-Type: application/json
+
+    {
+        
+        "user_id": 1,
+        "district": "Green park",
+        "street": "Green",
+        "number": 13,
+        "complement": "Atras da arvore"
+    }
+
+###
+
+GET http://localhost:3000/address
+
+###
+
+GET http://localhost:3000/address/1
+
+###
+
+PUT http://localhost:3000/address/1
+Content-Type: application/json
+
+    {
+        "user_id": 3,
+        "district": "Orange park",
+        "street": "Orange",
+        "number": 45,
+        "complement": "Orange"
+    }
+
+
+###
+
+DELETE http://localhost:3000/address/2

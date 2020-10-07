@@ -8,10 +8,10 @@ import {
   Put,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ProductType } from 'src/product-type/models/product-type.model';
+import { ProductType } from 'src/product-type/product-type.entity';
 import { Repository } from 'typeorm';
 import { ProductDto } from './dto/product.dto';
-import { Product } from './models/product.model';
+import { Product } from './product.entity';
 
 @Controller('product')
 export class ProductController {
@@ -47,9 +47,9 @@ export class ProductController {
     @Param('id') id: string,
     @Body() body: ProductDto,
   ): Promise<any> {
-    const producttype = await this.productTypeRepository.findOneOrFail(
-      +body.producttypeid,
-    );
+    // const producttype = await this.productTypeRepository.findOneOrFail(
+    //   +body.producttypeid,
+    // );
     const product = await this.productRepository.create(body);
     // product.producttype = producttype;
     await this.productRepository.update({ id: +id }, product);

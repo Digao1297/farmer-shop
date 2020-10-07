@@ -1,29 +1,30 @@
-import { ProductType } from 'src/product-type/models/product-type.model';
 import {
   Column,
   CreateDateColumn,
   Entity,
-  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
 @Entity()
-export class Product {
+export class Address {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column()
-  name: string;
+  user_id: number;
 
-  @Column({ type: 'decimal' })
-  price: number;
+  @Column()
+  district: string;
 
-  // @ManyToOne(
-  //   type => ProductType,
-  //   producttype => producttype.products,
-  // )
-  // producttype: ProductType;
+  @Column()
+  street: string;
+
+  @Column()
+  number: number;
+
+  @Column()
+  complement: string;
 
   @CreateDateColumn({ type: 'timestamp' })
   created_at: Date;

@@ -1,4 +1,3 @@
-import { Product } from 'src/product/models/product.model';
 import {
   Column,
   CreateDateColumn,

@@ -6,9 +6,11 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ProductTypeModule } from './product-type/product-type.module';
 import { Connection } from 'typeorm';
-import { ProductType } from './product-type/models/product-type.model';
+import { ProductType } from './product-type/product-type.entity';
 import { ProductModule } from './product/product.module';
-import { Product } from './product/models/product.model';
+import { Product } from './product/product.entity';
+import { AddressModule } from './address/address.module';
+import { Address } from './address/address.entity';
 
 @Module({
   imports: [
@@ -21,11 +23,12 @@ import { Product } from './product/models/product.model';
       username: process.env.TYPEORM_USERNAME,
       password: process.env.TYPEORM_PASSWORD,
       database: process.env.TYPEORM_DATABASE,
-      entities: [ProductType, Product],
+      entities: [ProductType, Product, Address],
       synchronize: true,
     }),
     ProductTypeModule,
     ProductModule,
+    AddressModule,
   ],
   controllers: [AppController],
   providers: [AppService],
