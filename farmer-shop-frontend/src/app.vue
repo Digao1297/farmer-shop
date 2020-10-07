@@ -4,4 +4,21 @@
   </v-app>
 </template>
 
-<style lang="scss"></style>
+<script>
+import { mapActions } from "vuex";
+export default {
+  name: "app",
+  methods: {
+    ...mapActions({
+      actionSetLanguage: "language/actionSetLanguage"
+    })
+  },
+  created() {
+    if (localStorage.getItem("lang") != "null") {
+      this.actionSetLanguage(localStorage.getItem("lang"));
+    } else {
+      this.actionSetLanguage("pt-br");
+    }
+  }
+};
+</script>

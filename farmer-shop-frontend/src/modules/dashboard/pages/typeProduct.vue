@@ -8,7 +8,7 @@
           rounded
           required
           color="secondary"
-          label="Pesquisar produto"
+          :label="getLanguages.search_type_product"
           append-icon="mdi-magnify"
         />
         <v-tooltip bottom>
@@ -24,14 +24,14 @@
               <v-icon dark>mdi-plus</v-icon>
             </v-btn>
           </template>
-          <span>Cadastrar</span>
+          <span>{{ getLanguages.register }}</span>
         </v-tooltip>
       </div>
       <v-data-table
         :headers="headers"
         :items="getTypeProducts"
         :search="search"
-        :items-per-page="5"
+        hide-default-footer
         class="elevation-1"
       >
         <!-- Ignorar esse erro pq o eslint é bugado -->
@@ -56,7 +56,7 @@
           <v-card-title>
             <v-row class="card-header">
               <v-col xs="7" sm="8" md="8" lg="8" xl="8">
-                <p class="title-card">Cadastrar</p>
+                <p class="title-card">{{ getLanguages.register }}</p>
               </v-col>
             </v-row>
           </v-card-title>
@@ -70,7 +70,7 @@
                   color="secondary"
                   :disabled="creatingTypeProduct"
                   outlined
-                  label="Nome"
+                  :label="getLanguages.name"
                 />
               </v-col>
             </v-row>
@@ -83,7 +83,7 @@
               :disabled="creatingTypeProduct"
               text
               @click="_closeDialog()"
-              >Cancelar</v-btn
+              >{{ getLanguages.cancel }}</v-btn
             >
             <v-btn
               color="secondary"
@@ -91,7 +91,7 @@
               form="form-typr-product"
               type="submit"
               :loading="creatingTypeProduct"
-              >Salvar</v-btn
+              >{{ getLanguages.save }}</v-btn
             >
           </v-card-actions>
         </v-form>
@@ -100,8 +100,11 @@
     <!-- Dialog delete -->
     <v-dialog v-model="showDeleteDialig" max-width="400" persistent>
       <v-card>
-        <v-card-title>Confirmar ação</v-card-title>
-        <v-card-text>Deseja deletar {{ productItemComp.name }}?</v-card-text>
+        <v-card-title>{{ getLanguages.confirm_action }}</v-card-title>
+        <v-card-text
+          >{{ getLanguages.do_you_want_to_delete }}
+          {{ productItemComp.name }}?</v-card-text
+        >
         <v-card-actions>
           <v-spacer />
           <v-btn
@@ -109,13 +112,13 @@
             text
             :disabled="deletingTypeProduct"
             @click="showDeleteDialig = false"
-            >Cancelar</v-btn
+            >{{ getLanguages.cancel }}</v-btn
           >
           <v-btn
             text
             :loading="deletingTypeProduct"
-            @click="_deleteProduct(productItem)"
-            >Confirmar</v-btn
+            @click="_deleteProduct(typeProductItem)"
+            >{{ getLanguages.confirm }}</v-btn
           >
         </v-card-actions>
       </v-card>
@@ -135,15 +138,12 @@ export default {
     form: {
       name: null
     },
-    productItem: null,
+    typeProductItem: null,
     deletingTypeProduct: false,
     showDeleteDialig: false,
 
     search: "",
-    headers: [
-      { text: "Nome", value: "name" },
-      { text: "Ações", value: "actions", sortable: false }
-    ],
+
     /**
      * Regras
      */
@@ -153,12 +153,19 @@ export default {
   }),
   computed: {
     ...mapGetters({
-      getTypeProducts: "dashboard/getTypeProducts"
+      getTypeProducts: "dashboard/getTypeProducts",
+      getLanguages: "language/getLanguages"
     }),
     productItemComp: {
       get() {
         return this.productItem != null ? this.productItem : { name: "" };
       }
+    },
+    headers() {
+      return [
+        { text: this.getLanguages.name, value: "name" },
+        { text: this.getLanguages.actions, value: "actions", sortable: false }
+      ];
     }
   },
   methods: {
@@ -222,7 +229,8 @@ export default {
       this._openDialog();
     },
     async _deleteDialog(item) {
-      this.actionDelete(item);
+      this.typeProductItem = item;
+      this.showDeleteDialig = !this.showDeleteDialig;
     },
     _openDialog() {
       this.showDialog = !this.showDialog;
