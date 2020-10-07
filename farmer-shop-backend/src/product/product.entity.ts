@@ -1,4 +1,5 @@
-import { ProductType } from 'src/product-type/models/product-type.model';
+import { Exclude } from 'class-transformer';
+import { ProductType } from 'src/product-type/product-type.entity';
 import {
   Column,
   CreateDateColumn,
@@ -24,10 +25,11 @@ export class Product {
   //   producttype => producttype.products,
   // )
   // producttype: ProductType;
-
+  @Exclude()
   @CreateDateColumn({ type: 'timestamp' })
   created_at: Date;
 
+  @Exclude()
   @UpdateDateColumn({ type: 'timestamp' })
   updated_at: Date;
 }

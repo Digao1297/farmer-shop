@@ -1,4 +1,4 @@
-import { Product } from 'src/product/models/product.model';
+import { Exclude } from 'class-transformer';
 import {
   Column,
   CreateDateColumn,
@@ -22,9 +22,11 @@ export class ProductType {
   // )
   // products: Product[];
 
+  @Exclude()
   @CreateDateColumn({ type: 'timestamp' })
   created_at: Date;
 
+  @Exclude()
   @UpdateDateColumn({ type: 'timestamp' })
   updated_at: Date;
 }
