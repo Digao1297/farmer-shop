@@ -1,5 +1,5 @@
 <template>
-  <div id="type-product">
+  <div id="address-comp">
     <v-card class="pa-4">
       <div class="header-table">
         <v-text-field
@@ -29,7 +29,7 @@
       </div>
       <v-data-table
         :headers="headers"
-        :items="getTypeProducts"
+        :items="getAddress"
         :search="search"
         hide-default-footer
         class="elevation-1"
@@ -48,11 +48,7 @@
     <!-- Dialog edit e create -->
     <v-dialog v-model="showDialog" max-width="400" persistent>
       <v-card>
-        <v-form
-          id="form-typr-product"
-          ref="formTypeProduct"
-          @submit.prevent="_submit()"
-        >
+        <v-form id="form-address" ref="formAddress" @submit.prevent="_submit()">
           <v-card-title>
             <v-row class="card-header">
               <v-col xs="7" sm="8" md="8" lg="8" xl="8">
@@ -62,15 +58,68 @@
           </v-card-title>
           <v-card-text>
             <v-row>
-              <v-col>
+              <v-col cols="4">
                 <v-text-field
-                  v-model="form.name"
+                  v-model="form.user_id"
+                  type="number"
                   :rules="[rules.required]"
                   required
                   color="secondary"
-                  :disabled="creatingTypeProduct"
+                  :disabled="creatingAddress"
                   outlined
-                  :label="getLanguages.name"
+                  :label="getLanguages.user_id"
+                />
+              </v-col>
+              <v-col cols="8">
+                <v-text-field
+                  v-model="form.district"
+                  :rules="[rules.required]"
+                  required
+                  color="secondary"
+                  :disabled="creatingAddress"
+                  outlined
+                  :label="getLanguages.district"
+                />
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col cols="4">
+                <v-text-field
+                  v-model="form.number"
+                  :rules="[rules.required]"
+                  type="number"
+                  required
+                  color="secondary"
+                  :disabled="creatingAddress"
+                  outlined
+                  :label="getLanguages.number"
+                />
+              </v-col>
+              <v-col cols="8">
+                <v-text-field
+                  v-model="form.street"
+                  :rules="[rules.required]"
+                  required
+                  color="secondary"
+                  :disabled="creatingAddress"
+                  outlined
+                  :label="getLanguages.street"
+                />
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col>
+                <v-textarea
+                  auto-grow
+                  rows="2"
+                  row-height="15"
+                  v-model="form.complement"
+                  :rules="[rules.required]"
+                  required
+                  :disabled="creatingAddress"
+                  outlined
+                  color="secondary"
+                  :label="getLanguages.complement"
                 />
               </v-col>
             </v-row>
@@ -80,7 +129,7 @@
             <v-btn
               color="error"
               rounded
-              :disabled="creatingTypeProduct"
+              :disabled="creatingAddress"
               text
               @click="_closeDialog()"
               >{{ getLanguages.cancel }}</v-btn
@@ -88,9 +137,9 @@
             <v-btn
               color="secondary"
               rounded
-              form="form-typr-product"
+              form="form-address"
               type="submit"
-              :loading="creatingTypeProduct"
+              :loading="creatingAddress"
               >{{ getLanguages.save }}</v-btn
             >
           </v-card-actions>
@@ -110,14 +159,14 @@
           <v-btn
             color="error"
             text
-            :disabled="deletingTypeProduct"
+            :disabled="deletingAddress"
             @click="showDeleteDialig = false"
             >{{ getLanguages.cancel }}</v-btn
           >
           <v-btn
             text
-            :loading="deletingTypeProduct"
-            @click="_deleteProduct(typeProductItem)"
+            :loading="deletingAddress"
+            @click="_deleteProduct(addressItem)"
             >{{ getLanguages.confirm }}</v-btn
           >
         </v-card-actions>
@@ -130,16 +179,20 @@
 import { mapActions, mapGetters } from "vuex";
 
 export default {
-  name: "type-product",
+  name: "address-comp",
   data: () => ({
     //Type Product
     showDialog: false,
-    creatingTypeProduct: false,
+    creatingAddress: false,
     form: {
-      name: null
+      user_id: null,
+      district: null,
+      street: null,
+      number: null,
+      complement: null
     },
-    typeProductItem: null,
-    deletingTypeProduct: false,
+    addressItem: null,
+    deletingAddress: false,
     showDeleteDialig: false,
 
     search: "",
@@ -153,7 +206,7 @@ export default {
   }),
   computed: {
     ...mapGetters({
-      getTypeProducts: "dashboard/getTypeProducts",
+      getAddress: "dashboard/getAddress",
       getLanguages: "language/getLanguages"
     }),
     productItemComp: {
@@ -163,46 +216,64 @@ export default {
     },
     headers() {
       return [
-        { text: this.getLanguages.name, value: "name" },
+        { text: this.getLanguages.district, value: "district" },
+        { text: this.getLanguages.street, value: "street" },
+        { text: this.getLanguages.number, value: "number" },
+        { text: this.getLanguages.complement, value: "complement" },
         { text: this.getLanguages.actions, value: "actions", sortable: false }
       ];
     }
   },
   methods: {
     ...mapActions({
-      actionLoad: "dashboard/actionLoad",
-      actionCreate: "dashboard/actionCreate",
-      actionEdit: "dashboard/actionEdit",
-      actionDelete: "dashboard/actionDelete"
+      actionLoad: "dashboard/actionLoadAddress",
+      actionCreate: "dashboard/actionCreateAddress",
+      actionEdit: "dashboard/actionEditAddress",
+      actionDelete: "dashboard/actionDeleteAddress"
     }),
     async _submit() {
+      this.form.user_id = parseInt(this.form.user_id);
+      this.form.number = parseInt(this.form.number);
+      console.log(this.form);
       if (this.form.id != null) {
-        if (this.form.name != null) {
-          this.creatingTypeProduct = !this.creatingTypeProduct;
+        if (
+          !isNaN(this.form.user_id) &&
+          this.form.district != null &&
+          this.form.street != null &&
+          !isNaN(this.form.number) &&
+          this.form.complement != null
+        ) {
+          this.creatingAddress = !this.creatingAddress;
           await this.actionEdit(this.form)
             .then(() => {
-              this.creatingTypeProduct = !this.creatingTypeProduct;
+              this.creatingAddress = !this.creatingAddress;
               this.showDialog = !this.showDialog;
               this._clearField();
             })
             .catch(error => {
-              this.creatingTypeProduct = !this.creatingTypeProduct;
+              this.creatingAddress = !this.creatingAddress;
               console.error(error);
             });
         } else {
           alert("Preencha todos os campos");
         }
       } else {
-        if (this.form.name != null) {
-          this.creatingTypeProduct = !this.creatingTypeProduct;
+        if (
+          !isNaN(this.form.user_id) &&
+          this.form.district != null &&
+          this.form.street != null &&
+          !isNaN(this.form.number) &&
+          this.form.complement != null
+        ) {
+          this.creatingAddress = !this.creatingAddress;
           await this.actionCreate(this.form)
             .then(() => {
-              this.creatingTypeProduct = !this.creatingTypeProduct;
+              this.creatingAddress = !this.creatingAddress;
               this.showDialog = !this.showDialog;
               this._clearField();
             })
             .catch(error => {
-              this.creatingTypeProduct = !this.creatingTypeProduct;
+              this.creatingAddress = !this.creatingAddress;
               console.error(error);
             });
         } else {
@@ -212,16 +283,16 @@ export default {
     },
 
     async _deleteProduct(item) {
-      this.deletingTypeProduct = !this.deletingTypeProduct;
+      this.deletingAddress = !this.deletingAddress;
 
       await this.actionDelete(item)
         .then(() => {
-          this.deletingTypeProduct = !this.deletingTypeProduct;
+          this.deletingAddress = !this.deletingAddress;
           this.showDeleteDialig = !this.showDeleteDialig;
         })
         .catch(error => {
           console.log(error);
-          this.deletingTypeProduct = !this.deletingTypeProduct;
+          this.deletingAddress = !this.deletingAddress;
         });
     },
     async _edit(item) {
@@ -229,7 +300,7 @@ export default {
       this._openDialog();
     },
     async _deleteDialog(item) {
-      this.typeProductItem = item;
+      this.addressItem = item;
       this.showDeleteDialig = !this.showDeleteDialig;
     },
     _openDialog() {
@@ -243,7 +314,7 @@ export default {
       this.form = {
         name: null
       };
-      this.$refs.formTypeProduct.resetValidation();
+      this.$refs.formAddress.resetValidation();
     }
   },
   created() {

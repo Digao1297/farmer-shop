@@ -1,3 +1,4 @@
 export const urls = {
-  typeProduct: "producttype"
+  typeProduct: "producttype",
+  address: "address",
 };
