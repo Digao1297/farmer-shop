@@ -4,7 +4,7 @@
 <p align="center">
 <img src="https://cdn.iconscout.com/icon/free/png-256/vue-282497.png" height="100" width="100" >
 <img src="https://docs.nestjs.com/assets/logo-small.svg" height="100" width="100">
-<img src="https://download.logo.wine/logo/PostgreSQL/PostgreSQL-Logo.wine.png" height="100" width="300">
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Postgresql_elephant.svg/1200px-Postgresql_elephant.svg.png" height="100" width="100">
   
 </p>
 
