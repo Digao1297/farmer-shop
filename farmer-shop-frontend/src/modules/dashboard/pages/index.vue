@@ -65,11 +65,22 @@
             }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
+
+        <v-list-item link @click.prevent="setItem(3)">
+          <v-list-item-icon>
+            <v-icon>mdi-home-city</v-icon>
+          </v-list-item-icon>
+
+          <v-list-item-content>
+            <v-list-item-title>{{ getLanguages.address }}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
       </v-list>
     </v-navigation-drawer>
     <v-main>
       <v-container>
-        <type-product v-if="item == 1" />
+        <type-product v-if="item == 2" />
+        <address-comp v-else-if="item == 3" />
       </v-container>
     </v-main>
   </div>
@@ -80,10 +91,11 @@ import { mapGetters, mapActions } from "vuex";
 export default {
   name: "dashboard",
   data: () => ({
-    item: 1
+    item: 2
   }),
   components: {
-    "type-product": () => import("./typeProduct")
+    "type-product": () => import("./typeProduct"),
+    "address-comp": () => import("./address")
   },
   methods: {
     ...mapActions({

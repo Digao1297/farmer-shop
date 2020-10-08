@@ -1,3 +1,4 @@
 export default {
-  type_products: []
+  type_products: [],
+  address: [],
 };
